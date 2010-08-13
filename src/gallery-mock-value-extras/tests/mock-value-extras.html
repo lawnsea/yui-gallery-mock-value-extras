@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>MockValue Extras Tests</title>
+<link type="text/css" rel="stylesheet" href="yui3/build/logreader/assets/skins/sam/logreader.css" />
+<script type="text/javascript" src="yui3/build/yui/yui.js"></script>
+</head>
+<body class="yui3-skin-sam">
+    <h1>MockValue Extras Tests</h1>
+    <div id="consoleEl"></div>
+<script type="text/javascript">  
+    
+YUI({
+    filter: "debug",
+    logInclude: { TestRunner: true },
+    modules: {
+        "gallery-mock-value-extras": {
+            name: "gallery-mock-value-extras",
+            fullpath: "../../../build/gallery-mock-value-extras/gallery-mock-value-extras.js",
+            type: "js"
+        },
+
+        "arraytemplate-tests": {
+            name: "arraytemplate-tests",
+            fullpath: "arraytemplate-tests.js",
+            type: "js"
+        }
+    }
+}).use('test', 'console', "gallery-mock-value-extras", "arraytemplate-tests", 
+function (Y) {
+
+var console = new Y.Console({
+    verbose : true,
+    newestOnTop : false
+});
+
+console.render('#consoleEl');
+Y.Test.Runner.run();
+
+});
+</script>
+</body>
+</html>
