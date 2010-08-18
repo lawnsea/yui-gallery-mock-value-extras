@@ -1,7 +1,9 @@
 <html>
 <head>
 <title>MockValue Extras Tests</title>
-<link type="text/css" rel="stylesheet" href="yui3/build/logreader/assets/skins/sam/logreader.css" />
+<link type="text/css" rel="stylesheet" 
+    href="yui3/build/logreader/assets/skins/sam/logreader.css" 
+    />
 <script type="text/javascript" src="yui3/build/yui/yui.js"></script>
 </head>
 <body class="yui3-skin-sam">
@@ -19,6 +21,12 @@ YUI({
             type: "js"
         },
 
+        "array-tests": {
+            name: "array-tests",
+            fullpath: "array-tests.js",
+            type: "js"
+        },
+
         "arraytemplate-tests": {
             name: "arraytemplate-tests",
             fullpath: "arraytemplate-tests.js",
@@ -26,6 +34,8 @@ YUI({
         }
     }
 }).use('test', 'console', "gallery-mock-value-extras", "arraytemplate-tests", 
+    "array-tests",
+
 function (Y) {
 
 var console = new Y.Console({

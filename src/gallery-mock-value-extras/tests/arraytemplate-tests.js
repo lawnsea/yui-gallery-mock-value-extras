@@ -7,7 +7,8 @@ tests.add(new Y.Test.Case({
             name: "Mock.Value.ArrayTemplate...",
 
             "...should be an instance of Mock.Value": function () {
-                Assert.isTrue(Y.Mock.Value.ArrayTemplate instanceof Y.Mock.Value);
+                Assert.isTrue(
+                    Y.Mock.Value.ArrayTemplate instanceof Y.Mock.Value);
             }
         }));
 

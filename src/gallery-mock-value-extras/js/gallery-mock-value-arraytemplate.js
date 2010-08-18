@@ -1,1 +1,1 @@
-Y.Mock.Value.ArrayTemplate = Y.Mock.Value(function (value) {});
+Y.Mock.Value.Array = Y.Mock.Value(Y.Assert.isArray);
