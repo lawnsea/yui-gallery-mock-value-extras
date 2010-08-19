@@ -39,7 +39,7 @@ tests.add(new Y.Test.Case({
         }));
 
 tests.add(new Y.Test.Case({
-            name: "Mock.Value.ArraySpec with a length requirement...",
+            name: "An ArraySpec with a length requirement...",
 
             _should: {
                 fail: {
@@ -59,7 +59,7 @@ tests.add(new Y.Test.Case({
         }));
 
 tests.add(new Y.Test.Case({
-            name: "Mock.Value.ArraySpec with a minLength requirement...",
+            name: "An ArraySpec with a minLength requirement...",
 
             _should: {
                 fail: {
@@ -84,7 +84,7 @@ tests.add(new Y.Test.Case({
         }));
 
 tests.add(new Y.Test.Case({
-            name: "Mock.Value.ArraySpec with a maxLength requirement...",
+            name: "An ArraySpec with a maxLength requirement...",
 
             _should: {
                 fail: {
@@ -106,6 +106,71 @@ tests.add(new Y.Test.Case({
                     maxLength: 3
                 },
                 [1, 2])
+        }));
+
+tests.add(new Y.Test.Case({
+            name: "An ArraySpec with a contains requirement...",
+
+            _should: {
+                fail: {
+                    "...should not allow arrays that don't contain the required elements": true
+                }
+            },
+
+            "...should not allow arrays that don't contain the required elements": makeTest({
+                    contains: [1, 2, 3]
+                },
+                [1, 3]),
+
+            "...should allow arrays that contain the required elements": makeTest({
+                    contains: [1, 2, 3]
+                },
+                [1, 2, 3, 4])
+        }));
+
+tests.add(new Y.Test.Case({
+            name: "An ArraySpec with a containsAny requirement...",
+
+            _should: {
+                fail: {
+                    "...should not allow arrays that don't contain one of the required elements": true
+                }
+            },
+
+            "...should not allow arrays that don't contain one of the required elements": makeTest({
+                    containsAny: [1, 2, 3]
+                },
+                [4, 5, 6]),
+
+            "...should allow arrays that contain one of the required elements": makeTest({
+                    containsAny: [1, 2, 3]
+                },
+                [4, 5, 1, 6]),
+
+            "...should allow arrays that contain more than one of the required elements": makeTest({
+                    containsAny: [1, 2, 3]
+                },
+                [3, 5, 1, 6])
+        }));
+
+tests.add(new Y.Test.Case({
+            name: "An ArraySpec with a doesNotContain requirement...",
+
+            _should: {
+                fail: {
+                    "...should not allow arrays that contain any of the given elements": true
+                }
+            },
+
+            "...should not allow arrays that contain any of the given elements": makeTest({
+                    doesNotContain: [1, 2, 3]
+                },
+                [4, 5, 1, 6]),
+
+            "...should allow arrays that contain none of the given elements": makeTest({
+                    doesNotContain: [1, 2, 3]
+                },
+                [4, 5, 6])
         }));
 
 Y.Test.Runner.add(tests);
