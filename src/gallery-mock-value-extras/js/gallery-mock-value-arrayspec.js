@@ -4,6 +4,7 @@ var Assert = Y.Assert,
     MockValue = Y.Mock.Value,
     objectEach = Y.Object.each,
     indexOf = Y.Array.indexOf,
+    ELEMENT_INDEX_REGEX = /^\d+$/,
     requirementHandlers;
 
 requirementHandlers = {
@@ -49,7 +50,11 @@ function meetsSpec(spec, value) {
     Assert.isArray(value);
 
     objectEach(spec, function (reqVal, reqName) {
-            if (reqName in requirementHandlers) {
+            if (ELEMENT_INDEX_REGEX.test(reqName)) {
+                // if the requirement name is an element index, compare the element at that index
+                Assert.areSame(reqVal, value[parseInt(reqName, 10)]);
+            } else if (reqName in requirementHandlers) {
+                // if a handler exists for that requirement, use it to check value
                 requirementHandlers[reqName](reqVal, value);
             }
         });
@@ -59,6 +64,7 @@ MockValue.ArraySpec = function (spec) {
     spec = isUndefined(spec) ? {} : spec;
     Assert.isObject(spec);
 
+    // TODO: support a "handlers" key to allow additional handlers to be specified
     return MockValue(Y.bind(meetsSpec, null, spec));
 };
 

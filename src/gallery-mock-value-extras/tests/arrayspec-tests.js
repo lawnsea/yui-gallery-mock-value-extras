@@ -173,6 +173,48 @@ tests.add(new Y.Test.Case({
                 [4, 5, 6])
         }));
 
+tests.add(new Y.Test.Case({
+            name: "An ArraySpec with an element index requirement...",
+
+            _should: {
+                fail: {
+                    "...should not allow arrays with an incorrect value at the given index": true
+                }
+            },
+
+            "...should allow arrays with the correct value at the given index": makeTest({
+                    "2": "foo"
+                },
+                [1, 2, "foo", "bar"]),
+
+            "...should not allow arrays with an incorrect value at the given index": makeTest({
+                    "2": "foo"
+                },
+                [1, 2, "bar", "foo"])
+        }));
+
+tests.add(new Y.Test.Case({
+            name: "An ArraySpec with an multiple element index requirements...",
+
+            _should: {
+                fail: {
+                    "...should not allow arrays with an incorrect value at any index": true
+                }
+            },
+
+            "...should allow arrays with the correct values at all indices": makeTest({
+                    "1": 2,
+                    "2": "foo"
+                },
+                [1, 2, "foo", "bar"]),
+
+            "...should not allow arrays with an incorrect value at any index": makeTest({
+                    "1": 2,
+                    "2": "foo"
+                },
+                [1, 2, "bar", "foo"])
+        }));
+
 Y.Test.Runner.add(tests);
 }, "1", {
     requires: ["test", "gallery-mock-value-extras"]
