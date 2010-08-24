@@ -25,7 +25,9 @@ tests.add(new Y.Test.Case({
 
             _should: {
                 fail: {
-                    "...should not allow non-object values": true
+                    "...should not allow non-object values": true,
+                    "...should not allow function values": true,
+                    "...should not allow array values": true
                 }
             },
 
@@ -34,9 +36,13 @@ tests.add(new Y.Test.Case({
                     Y.Mock.Value.ObjectSpec() instanceof Y.Mock.Value);
             },
 
-            "...should not allow non-object values": makeTest({}, {}),
+            "...should not allow non-object values": makeTest({}, "foo"),
+            
+            "...should not allow function values": makeTest({}, function () {}),
 
-            "...should allow any object if no spec provided": makeTest({}, [])
+            "...should not allow array values": makeTest({}, []),
+
+            "...should allow any object if no spec provided": makeTest({}, {})
         }));
 
 tests.add(new Y.Test.Case({
@@ -51,12 +57,12 @@ tests.add(new Y.Test.Case({
             "...should allow objects of correct size": makeTest({
                     size: 3
                 },
-                [1, 2, 3]),
+                { foo: "bar", frob: "nard", fiz: "biz" }),
 
             "...should not allow objects of incorrect size": makeTest({
                     size: 3
                 },
-                [1, 2, 3, 4])
+                { foo: "bar", frob: "nard", fiz: "biz", moo: "cow" })
         }));
 
 tests.add(new Y.Test.Case({
@@ -71,17 +77,17 @@ tests.add(new Y.Test.Case({
             "...should allow objects of equal size": makeTest({
                     minSize: 3
                 },
-                [1, 2, 3]),
+                { foo: "bar", frob: "nard", fiz: "biz" }),
 
             "...should allow objects of greater size": makeTest({
                     minSize: 3
                 },
-                [1, 2, 3, 4, 5]),
+                { foo: "bar", frob: "nard", fiz: "biz", moo: "cow" }),
 
             "...should not allow objects of lesser size": makeTest({
                     minSize: 3
                 },
-                [1, 2])
+                { foo: "bar", frob: "nard" })
         }));
 
 tests.add(new Y.Test.Case({
@@ -96,17 +102,17 @@ tests.add(new Y.Test.Case({
             "...should allow objects of equal size": makeTest({
                     maxSize: 3
                 },
-                [1, 2, 3]),
+                { foo: "bar", frob: "nard", fiz: "biz" }),
 
             "...should not allow objects of greater size": makeTest({
                     maxSize: 3
                 },
-                [1, 2, 3, 4, 5]),
+                { foo: "bar", frob: "nard", fiz: "biz", moo: "cow" }),
 
             "...should allow objects of lesser size": makeTest({
                     maxSize: 3
                 },
-                [1, 2])
+                { foo: "bar", frob: "nard" })
         }));
 
 tests.add(new Y.Test.Case({

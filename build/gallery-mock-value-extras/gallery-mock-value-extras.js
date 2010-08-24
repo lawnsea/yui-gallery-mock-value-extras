@@ -78,17 +78,62 @@ MockValue.ArraySpec = function (spec) {
 var Assert = Y.Assert,
     ObjectAssert = Y.ObjectAssert,
     isUndefined = Y.Lang.isUndefined,
+    isFunction = Y.Lang.isFunction,
+    isArray = Y.Lang.isArray,
     MockValue = Y.Mock.Value,
-    objectEach = Y.Object.each,
+    each = Y.Object.each,
+    some = Y.Object.some,
+    objectSize = Y.Object.size,
     requirementHandlers;
 
 requirementHandlers = {
+    size: function (size, value) {
+        Assert.areSame(size, objectSize(value), "object has wrong size");
+    },
+
+    minSize: function (size, value) {
+        Assert.isTrue(size <= objectSize(value), "object is too small");
+    },
+
+    maxSize: function (size, value) {
+        Assert.isTrue(objectSize(value) <= size, "object is too big");
+    },
+
+    contains: function (keys, value) {
+        ObjectAssert.hasKeys(keys, value, "object missing required keys");
+    },
+
+    containsAny: function (keys, value) {
+        var matched = false,
+            i = 0;
+        
+        while (!matched && i < keys.length) {
+            matched = keys[i] in value;
+            i++;
+        }
+
+        Assert.isTrue(matched, "object contains no key satisfying requirement");
+    },
+
+    doesNotContain: function (keys, value) {
+        var matched = false,
+            i = 0;
+        
+        while (!matched && i < keys.length) {
+            matched = keys[i] in value;
+            i++;
+        }
+
+        Assert.isFalse(matched, "object contains forbidden keys");
+    }
 };
 
 function meetsSpec(spec, value) {
+    Assert.isFalse(isFunction(value));
+    Assert.isFalse(isArray(value));
     Assert.isObject(value);
 
-    objectEach(spec, function (reqVal, reqName) {
+    each(spec, function (reqVal, reqName) {
             if (reqName in requirementHandlers) {
                 // if a handler exists for that requirement, use it to check value
                 requirementHandlers[reqName](reqVal, value);
