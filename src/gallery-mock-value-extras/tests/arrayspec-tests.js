@@ -194,7 +194,7 @@ tests.add(new Y.Test.Case({
         }));
 
 tests.add(new Y.Test.Case({
-            name: "An ArraySpec with an multiple element index requirements...",
+            name: "An ArraySpec with a multiple element index requirements...",
 
             _should: {
                 fail: {

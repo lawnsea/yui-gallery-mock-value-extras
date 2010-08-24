@@ -1,3 +1,4 @@
+(function () {
 var Assert = Y.Assert,
     ArrayAssert = Y.ArrayAssert,
     isUndefined = Y.Lang.isUndefined,
@@ -67,4 +68,5 @@ MockValue.ArraySpec = function (spec) {
     // TODO: support a "handlers" key to allow additional handlers to be specified
     return MockValue(Y.bind(meetsSpec, null, spec));
 };
+}());
 
