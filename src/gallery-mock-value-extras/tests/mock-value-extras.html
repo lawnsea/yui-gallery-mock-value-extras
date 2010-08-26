@@ -37,10 +37,22 @@ YUI({
             name: "objectspec-tests",
             fullpath: "objectspec-tests.js",
             type: "js"
+        },
+
+        "oneof-tests": {
+            name: "oneof-tests",
+            fullpath: "oneof-tests.js",
+            type: "js"
+        },
+
+        "noneof-tests": {
+            name: "noneof-tests",
+            fullpath: "noneof-tests.js",
+            type: "js"
         }
     }
 }).use('test', 'console', "gallery-mock-value-extras", "array-tests",
-    "arrayspec-tests", "objectspec-tests",
+    "arrayspec-tests", "objectspec-tests", "oneof-tests", "noneof-tests",
 
 function (Y) {
 
