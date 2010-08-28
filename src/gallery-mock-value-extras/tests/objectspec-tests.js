@@ -180,6 +180,32 @@ tests.add(new Y.Test.Case({
                 { boo: "bar", brob: "nard", biz: "biz", moo: "cow" })
         }));
 
+tests.add(new Y.Test.Case({
+            name: "An ObjectSpec with a simple containsOneOf requirement...",
+
+            _should: {
+                fail: {
+                    "...should not allow objects that don't contain one of the required keys": true,
+                    "...should not allow objects that contain more than one of the required keys": true
+                }
+            },
+
+            "...should not allow objects that don't contain one of the required keys": makeTest({
+                    containsOneOf: ["foo", "fiz", "frob"]
+                },
+                { boo: "bar", brob: "nard", biz: "biz", moo: "cow" }),
+
+            "...should allow objects that contain one of the required keys": makeTest({
+                    containsOneOf: ["foo", "fiz", "frob"]
+                },
+                { boo: "bar", frob: "nard", biz: "biz", moo: "cow" }),
+
+            "...should not allow objects that contain more than one of the required keys": makeTest({
+                    containsOneOf: ["foo", "fiz", "frob"]
+                },
+                { boo: "bar", frob: "nard", fiz: "biz", moo: "cow" })
+        }));
+
 Y.Test.Runner.add(tests);
 }, "1", {
     requires: ["test", "gallery-mock-value-extras"]

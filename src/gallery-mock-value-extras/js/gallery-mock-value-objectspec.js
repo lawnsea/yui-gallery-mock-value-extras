@@ -39,6 +39,25 @@ requirementHandlers = {
         Assert.isTrue(matched, "object contains no key satisfying requirement");
     },
 
+    containsOneOf: function (keys, value) {
+        var matchedOne = false,
+            matchedMore = false,
+            i = 0;
+        
+        while (!matchedMore && i < keys.length) {
+            matchedMore = matchedOne && keys[i] in value;
+
+            if (matchedOne === false) {
+                matchedOne = keys[i] in value;
+            }
+
+            i++;
+        }
+
+        Assert.isTrue(matchedOne, "object contains no key satisfying requirement");
+        Assert.isFalse(matchedMore, "object contains two keys satisfying requirement");
+    },
+
     doesNotContain: function (keys, value) {
         var matched = false,
             i = 0;
