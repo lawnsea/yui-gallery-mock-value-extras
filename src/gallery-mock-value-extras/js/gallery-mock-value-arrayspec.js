@@ -22,7 +22,21 @@ requirementHandlers = {
     },
 
     contains: function (elements, value) {
-        ArrayAssert.containsItems(elements, value, "array missing required elements");
+        var i = 0, j,
+            matched;
+
+        do {
+            matched = false;
+            j = 0;
+            while (!matched && j < value.length) {
+                matched = isAsExpected(elements[i], value[j]);
+                j++;
+            }
+
+            i++;
+        } while (matched && i < elements.length);
+            
+        Assert.isTrue(matched, value, "array missing required elements");
     },
 
     containsAny: function (elements, value) {

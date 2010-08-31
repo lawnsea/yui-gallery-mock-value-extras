@@ -118,12 +118,12 @@ tests.add(new Y.Test.Case({
             },
 
             "...should not allow arrays that don't contain the required elements": makeTest({
-                    contains: [1, 2, 3]
+                    contains: [1, MockValue.String, 3]
                 },
                 [1, 3]),
 
             "...should allow arrays that contain the required elements": makeTest({
-                    contains: [1, 2, 3]
+                    contains: [1, MockValue.Number, 3]
                 },
                 [1, 2, 3, 4])
         }));

@@ -1,11 +1,27 @@
 YUI.add('gallery-mock-value-extras', function(Y) {
 
+var Assert = Y.Assert,
+    isUndefined = Y.Lang.isUndefined;
+
+function isAsExpected(expected, actual) {
+    if (expected instanceof Y.Mock.Value) {
+        try {
+            expected.verify(actual);
+        } catch (e) {
+            return false;
+        }
+
+        return true;
+    } else {
+        return expected === actual;
+    }
+}
+
 Y.Mock.Value.Array = Y.Mock.Value(Y.Assert.isArray);
 
 (function () {
 var Assert = Y.Assert,
     ArrayAssert = Y.ArrayAssert,
-    isUndefined = Y.Lang.isUndefined,
     MockValue = Y.Mock.Value,
     objectEach = Y.Object.each,
     indexOf = Y.Array.indexOf,
@@ -26,7 +42,21 @@ requirementHandlers = {
     },
 
     contains: function (elements, value) {
-        ArrayAssert.containsItems(elements, value, "array missing required elements");
+        var i = 0, j,
+            matched;
+
+        do {
+            matched = false;
+            j = 0;
+            while (!matched && j < value.length) {
+                matched = isAsExpected(elements[i], value[j]);
+                j++;
+            }
+
+            i++;
+        } while (matched && i < elements.length);
+            
+        Assert.isTrue(matched, value, "array missing required elements");
     },
 
     containsAny: function (elements, value) {
@@ -77,7 +107,6 @@ MockValue.ArraySpec = function (spec) {
 (function () {
 var Assert = Y.Assert,
     ObjectAssert = Y.ObjectAssert,
-    isUndefined = Y.Lang.isUndefined,
     isFunction = Y.Lang.isFunction,
     isArray = Y.Lang.isArray,
     MockValue = Y.Mock.Value,
